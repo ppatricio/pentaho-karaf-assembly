@@ -22,21 +22,27 @@
   <!-- pentaho-analyzer feature is using spring feature -->
   <repository>mvn:org.hitachivantara.karaf.features/spring32/${project.version}/xml/features</repository>
 
-
   <feature name="pentaho-client-ee" version="1.0">
     <feature prerequisite="true">pentaho-client</feature>
     <feature prerequisite="true">pentaho-ee-streaming-feature</feature>
     <bundle>mvn:commons-collections/commons-collections/${commons.collections.version}</bundle>
   </feature>
+
+  <feature name="pentaho-analyzer-prerequisites" version="1.0">
+    <bundle>mvn:com.ibm.icu/icu4j/${icu4j.version}</bundle>
+  </feature>
+
   <feature name="pentaho-analyzer" version="1.0">
+    <feature prerequisite="true">pentaho-analyzer-prerequisites</feature>
+
     <!-- Spring-DM needed in Analyzer OSGI plugin to get Spring Application Context -->
     <feature prerequisite="true">spring-dm</feature>
     <feature prerequisite="true">pdi-platform</feature>
     <feature prerequisite="true" version="${project.version}">pentaho-requirejs-osgi-manager</feature>
     <bundle>wrap:mvn:pentaho/pentaho-connections/${pentaho-connections.version}</bundle>
     <bundle>mvn:pentaho/pentaho-analyzer-xsd/${analyzer-plugin.version}</bundle>
+
     <bundle>pentaho-platform-plugin-mvn:pentaho/paz-plugin-ce/${analyzer-plugin.version}/zip</bundle>
-    <bundle dependency="true">mvn:com.ibm.icu/icu4j/${icu4j.version}</bundle>
   </feature>
 
   <feature name="pentaho-monitoring" version="1.0">
